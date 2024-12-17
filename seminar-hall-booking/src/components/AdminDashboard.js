@@ -59,10 +59,25 @@ const AdminDashboard = () => {
 
     setRequests(updatedRequests);
   };
+  const handleClearData = () => {
+    if (window.confirm("Are you sure you want to clear all data? This action cannot be undone.")) {
+      localStorage.clear();
+      // Optionally reinitialize default admin data
+      localStorage.setItem(
+        "admin",
+        JSON.stringify({ email: "admin@gmail.com", pass: "1234" })
+      );
+      setRequests([]); // Clear requests in the state
+      alert("All data has been cleared!");
+    }
+  };
 
   return (
     <div className="admin-dashboard">
       <h1 className="header">Admin Dashboard</h1>
+      <button className="clear-data-btn" onClick={handleClearData}>
+        Clear All Data
+      </button>
       <div className="admin-container">
         {requests.length === 0 ? (
           <p className="empty-text">No requests found.</p>
